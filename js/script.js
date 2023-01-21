@@ -4,6 +4,9 @@ let losses = 0;
 
 const buttons = document.querySelectorAll(`button`);
 
+const score = document.querySelector(`.score`);
+score.innerText = `The player has ${wins} wins. And computer has ${losses} wins`;
+
 function getRandomInt(max){
     return Math.floor(Math.random() * Math.floor(max));
 }
@@ -50,4 +53,18 @@ function playRound(playerSelection = "", computerSelection = getComputerChoice()
     }
 }
 
-buttons.forEach((button) => button.addEventListener(`click`, (e) => console.log(playRound(button.innerText))));
+function updateScore(){
+    if(wins === 5){
+        score.innerText = `Player has won with a score of ${wins}`;
+        return
+    }
+    if(losses === 5){
+        score.innerText = `Computer has won with a score of ${losses}`;
+        return
+    }
+    score.innerText = `The player has ${wins} wins. And computer has ${losses} wins`;
+}
+
+buttons.forEach((button) => button.addEventListener(`click`, (e) => {
+    if(wins < 5 && losses < 5) playRound(button.innerText);
+    updateScore()}));
